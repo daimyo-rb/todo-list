@@ -1,3 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
+    /* background-color: yellow; */
+    overflow: hidden; /* prevent entire page from scrolling */
+}
+.container {
+    height: 100%;
+    border: 2px solid purple;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+.sidebar { /* my .left-column */
     background-color: yellow;
+    padding: 20px;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.sidebar-header {
+    background-color: green;
+    height: 20px;
+}
+.sidebar-main {
+    background-color: pink;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.project-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 3px solid red;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.project-btn, .new-project-btn {
+    border: 3px solid blue;
+    height: 50px;
+    width: 100%;
+    flex-shrink: 0;
+}
+.sidebar-footer {
+    background-color: cyan;
+    height: 20px;
+}
+.right-wrapper {
+    background-color: green;
+    overflow: hidden;
+}
+.todo-columns {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    overflow-x: auto;
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    
+}
+.todo-column {
+    height: 100vh;
+    width: 300px;
+    background-color: orange;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden; */
+}
+.todo-column-label {
+    font-size: 18px;
+    border: 3px solid pink;
+}
+.todo-item-container {
+    border: 3px solid red;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex-grow: 1;
+    gap: 20px;
+
+}
+.todo-item {
+    border: 3px solid purple;
+    flex-shrink: 0;
+    height: 70px;
 }
