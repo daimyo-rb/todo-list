@@ -25,14 +25,14 @@ function populateTestValues() {
 populateTestValues();
 
 const screenController = (function (stateManager) {
-    function displayHTML(hookElem, content){
-        hookElem.innerHTML = content;
-    }
     function displayBase() { 
         const hookElem = document.getElementById("container");
         const content = `
         <div class="sidebar">
-            <div class="sidebar-header"></div>
+            <div class="sidebar-header">
+                <p>Your Projects</p>
+                <button class="new-project-btn-small">+ new</button>
+            </div>
             <div class="sidebar-main"></div>
             <div class="sidebar-footer"></div>
         </div>
@@ -40,41 +40,62 @@ const screenController = (function (stateManager) {
             <div class="todo-columns"></div>
         </div>
         `
-        displayHTML(hookElem, content);
+        hookElem.innerHTML = content;
     }
-    function buildProjectHTMLString() {
-        const projectList = document.createElement("div");
-        projectList.classList.add("project-list")
-        const newProjBtn = document.createElement("button");
-        newProjBtn.classList.add("project-btn");
-        stateManager.getProjects().forEach(project => {
-          let newBtn = document.createElement('button');
-          newBtn.classList.add('project-btn'); 
-          newBtn.textContent = project.name;
-          projectList.appendChild(newBtn);
-        });
-        return projectList.outerHTML;
+    function buildProjectElem(project) {
+        let newBtn = document.createElement('button');
+        newBtn.classList.add('project-btn'); 
+        newBtn.textContent = project.name;
+        return newBtn;
     }
     function displayProjects() {
         const hookElem = document.getElementsByClassName("sidebar-main")[0];
-        const content = buildProjectHTMLString();
-        displayHTML(hookElem, content);
+        const projectList = document.createElement("div");
+        projectList.classList.add("project-list")
+        stateManager.getProjects().forEach(project => {
+            const projectElem = buildProjectElem(project);
+            projectList.appendChild(projectElem);
+        });
+        let addProjectBtn = document.createElement('button');
+        addProjectBtn.classList.add('new-project-btn-large');
+        addProjectBtn.textContent = "+ new project";
+        projectList.appendChild(addProjectBtn);
+        hookElem.appendChild(projectList);
+    }
+    function addTodoColumnHeader(root, label){
+        const todoColumnHeader = document.createElement('div');
+        todoColumnHeader.classList.add('todo-column-header');
+        const todoColumnLabel = document.createElement('p');
+        todoColumnLabel.textContent = label;
+        todoColumnHeader.appendChild(todoColumnLabel);
+        const newTodoBtn = document.createElement('button');
+        newTodoBtn.classList.add('new-todo-btn-small');
+        newTodoBtn.textContent = "+ new";
+        todoColumnHeader.appendChild(newTodoBtn);
+        root.appendChild(todoColumnHeader);
+    }
+    function addTodoElemToTodoContainer(container, todo){
+        const todoElem = document.createElement('button');
+        todoElem.classList.add('todo-item');
+        todoElem.textContent = todo.title;
+        container.appendChild(todoElem);
+    }
+    function addNewTaskButtonToTodoContainer(container) {
+        const todoElem = document.createElement('button');
+        todoElem.classList.add('new-todo-btn-large');
+        todoElem.textContent = "+ new todo";
+        container.appendChild(todoElem);
     }
     function buildTodoColumn(projectObj, label) {
         const curTodoColumnRoot = document.createElement('div');
         curTodoColumnRoot.classList.add('todo-column');
-        const todoColumnLabel = document.createElement('div');
-        todoColumnLabel.classList.add('todo-column-label');
-        todoColumnLabel.textContent = label;
-        curTodoColumnRoot.appendChild(todoColumnLabel);
+        addTodoColumnHeader(curTodoColumnRoot, label);
         const todoItemContainer = document.createElement('div');
         todoItemContainer.classList.add('todo-item-container');
         projectObj.getTodosWithLabel(label).forEach(todo => {
-            const todoElem = document.createElement('button');
-            todoElem.classList.add('todo-item');
-            todoElem.textContent = todo.title;
-            todoItemContainer.appendChild(todoElem);
+            addTodoElemToTodoContainer(todoItemContainer, todo);
         });
+        addNewTaskButtonToTodoContainer(todoItemContainer);
         curTodoColumnRoot.appendChild(todoItemContainer);
         return curTodoColumnRoot;
         
