@@ -7,7 +7,7 @@ body {
     /* background-color: yellow; */
     overflow: hidden; /* prevent entire page from scrolling */
 }
-.container {
+#container {
     height: 100%;
     border: 2px solid purple;
     display: grid;

@@ -2,8 +2,15 @@ import { createProject } from "./project.js";
 
 export const stateManager = (function () {
     let counter = 0;
+    let activeProjectId = 0;
     const projectList = [];
     const getProjects = () => projectList;
+    const getActiveProject = () => {
+        return getProjectById(activeProjectId);
+    }
+    const setActiveProjectId = (projectId) => {
+        activeProjectId = projectId;
+    }
     const createNewProject = (name) => {
         const newProject = createProject(name);
         newProject.id = counter;
@@ -50,5 +57,5 @@ export const stateManager = (function () {
         let project = getProjectById(projectId);
         removeTodoByTodoIdProjectObject(todoId, project);
     }
-    return { getProjects, createNewProject, removeProjectById, getTodosByProjectId, addTodoByProjectId, removeTodoByTodoIdProjectId };
+    return { getActiveProject, setActiveProjectId, getProjects, createNewProject, removeProjectById, getTodosByProjectId, addTodoByProjectId, removeTodoByTodoIdProjectId };
 })();

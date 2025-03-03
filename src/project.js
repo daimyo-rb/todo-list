@@ -1,6 +1,13 @@
 export function createProject (name, id=-1) {
+    id = id;
     let counter = 0;
     const todoList = new Array();
+    const getUniqueLabels = () => {
+        return new Set(todoList.map(todo => todo.label));
+    }
+    const getTodosWithLabel = (label) => {
+        return todoList.filter(todo => todo.label === label);
+    }
     const getTodos = () => {
         return todoList;
     }
@@ -28,5 +35,5 @@ export function createProject (name, id=-1) {
         let index = getTodoIndexById(id);
         removeTodoByIndex(index);
     }
-    return { name, getTodos, getTodoById, addTodo, removeTodoById };
+    return { name, getTodos, getUniqueLabels, getTodosWithLabel, getTodoById, addTodo, removeTodoById };
 }
