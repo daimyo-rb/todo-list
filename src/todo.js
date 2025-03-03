@@ -1,7 +1,6 @@
-export function createTodo () {
-    let score = 1;
-    const sayHi = () => {
-        console.log('hi Im');
+export function createTodo (title, description, dueDate, label, notes, isDone, id=-1) {
+    const toggleIsDone = function() {
+        this.isDone = !this.isDone;    
     }
-    return { score, sayHi };
+    return { title, description, dueDate, label, notes, isDone, id, toggleIsDone };
 }
