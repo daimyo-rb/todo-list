@@ -13,9 +13,11 @@ export const stateManager = (function () {
     }
     const createNewProject = (name) => {
         const newProject = createProject(name);
-        newProject.id = counter;
+        let newProjectId = counter
+        newProject.id = newProjectId;
         counter++;
         projectList.push(newProject);
+        return newProjectId;
     }
     const getProjectIndexById = (id) => {
         for (let i = 0; i < projectList.length; i++ ){
