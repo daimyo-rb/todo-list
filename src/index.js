@@ -1,7 +1,15 @@
 import "./styles.css";
 import { createTodo } from "./todo.js";
+import { stateManager } from "./stateManager.js";
 import { screenController } from "./screenController.js";
 
+stateManager.loadStateManagerState();
+// stateManager.populateDummyValues();
+screenController.updatePage();
+
+
+// console.log(screenController.toString());
+// console.log(JSON.stringify(screenController));
 
 // populateTestValues();
 

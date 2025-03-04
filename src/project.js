@@ -1,7 +1,22 @@
 export function createProject (name, id=-1) {
     id = id;
     let counter = 0;
-    const todoList = new Array();
+    let todoList = new Array();
+    const getProjectId = () => {
+        return id;
+    }
+    const setProjectId = (value) => {
+        id = value;
+    }
+    const getCounter = () => {
+        return counter;
+    }
+    const setCounter = (value) => {
+        counter = value;
+    }
+    const setTodoList = (list) => {
+        todoList = list;
+    }
     const getUniqueLabels = () => {
         return new Set(todoList.map(todo => todo.label));
     }
@@ -35,5 +50,5 @@ export function createProject (name, id=-1) {
         let index = getTodoIndexById(id);
         removeTodoByIndex(index);
     }
-    return { name, getTodos, getUniqueLabels, getTodosWithLabel, getTodoById, addTodo, removeTodoById };
+    return { name, setTodoList, getProjectId, setProjectId, getCounter, setCounter, getTodos, getUniqueLabels, getTodosWithLabel, getTodoById, addTodo, removeTodoById };
 }

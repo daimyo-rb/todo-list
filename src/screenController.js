@@ -1,25 +1,7 @@
-import { createTodo } from "./todo.js";
 import { stateManager } from "./stateManager.js";
+import { createTodo } from "./todo.js";
+
 export const screenController = (function (stateManager) {
-    function populateDummyValues() {
-        let projectOneId = 0;
-        let projectTwoId = 1;
-        stateManager.createNewProject('awesome'); // id = 0
-        stateManager.createNewProject('sauce'); // id = 1
-        stateManager.createNewProject('rocks'); // id =21
-        for (let i = 0; i < 7; i++) {
-            let taskName = `task${i}`;
-            stateManager.addTodoByProjectId(createTodo(taskName, 'description', 'date', 'low priority', 'notes', true), projectOneId);    
-        }
-        for (let i = 7; i < 10; i++) {
-            let taskName = `task${i}`;
-            stateManager.addTodoByProjectId(createTodo(taskName, 'description', 'date', 'high priority', 'notes', false), projectOneId);    
-        }
-        for (let i = 0; i < 5; i++) {
-            let taskName = `task${i}`;
-            stateManager.addTodoByProjectId(createTodo(taskName, 'description', 'date', 'priority', 'notes', false), projectTwoId);    
-        }
-    }
     function displayBase() { 
         const hookElem = document.getElementById("container");
         const content = `
@@ -88,8 +70,8 @@ export const screenController = (function (stateManager) {
         let newBtn = document.createElement('button');
         newBtn.classList.add('project-btn'); 
         newBtn.textContent = project.name;
-        newBtn.dataset.id = project.id;
-        if (project.id == stateManager.getActiveProject().id){
+        newBtn.dataset.id = project.getProjectId();
+        if (project.getProjectId() == stateManager.getActiveProject().getProjectId()){
             newBtn.classList.add('active-project');
         }
         return newBtn;
@@ -320,7 +302,7 @@ export const screenController = (function (stateManager) {
         if (deleteTodoBtn && !isEditTodo){
             deleteTodoBtn.remove();
         }
-        if (!isEditTodo) {
+        if (!isEditTodo || deleteTodoBtn) {
             return;
         }
         const deleteButton = addFormDeleteButton(e, isEditTodo);
@@ -381,8 +363,7 @@ export const screenController = (function (stateManager) {
     function updatePage(){
         updateScreen();
         addMyEventListeners();
+        stateManager.dumpStateManagerState();
     }
-    populateDummyValues();
-    updatePage();
-    return { updateScreen, displayBase, displayProjects, displayTodos };
+    return { stateManager, updatePage };
 })(stateManager);
