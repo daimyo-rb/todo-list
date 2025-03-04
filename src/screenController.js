@@ -2,7 +2,7 @@ import { createTodo } from "./todo.js";
 import { stateManager } from "./stateManager.js";
 export const screenController = (function (stateManager) {
     function populateDummyValues() {
-         let projectOneId = 0;
+        let projectOneId = 0;
         let projectTwoId = 1;
         stateManager.createNewProject('awesome'); // id = 0
         stateManager.createNewProject('sauce'); // id = 1
@@ -180,8 +180,7 @@ export const screenController = (function (stateManager) {
             let newProjectId = stateManager.createNewProject(value);
             stateManager.setActiveProjectId(newProjectId);
         }
-        updateScreen();
-        addMyEventListeners();    
+        updatePage();  
     }
     function newProjectHandler(e) {
         let enterPressed = false;
@@ -217,8 +216,7 @@ export const screenController = (function (stateManager) {
             return
         }
         stateManager.setActiveProjectId(clickedProjectId);
-        updateScreen();
-        addMyEventListeners();
+        updatePage();
     }
     function addChangeActiveProjectEventListeners() {
         const projectBtns = document.getElementsByClassName("project-btn");
@@ -258,8 +256,7 @@ export const screenController = (function (stateManager) {
             stateManager.getActiveProject().addTodo(newTodo);
         }
         form.reset();
-        updateScreen();
-        addMyEventListeners();
+        updatePage();
     }
     function getModalRoot() {
         return document.getElementsByClassName('modal')[0];
@@ -316,8 +313,7 @@ export const screenController = (function (stateManager) {
         const todoId = e.target.dataset.id;
         stateManager.getActiveProject().removeTodoById(todoId);
         document.getElementById('form-todo').reset();
-        updateScreen();
-        addMyEventListeners();
+        updatePage();
     }
     function handleFormDeleteButton(e, isEditTodo) {
         const deleteTodoBtn = document.getElementsByClassName('delete-todo-btn')[0];
@@ -382,8 +378,11 @@ export const screenController = (function (stateManager) {
         addChangeActiveProjectEventListeners();
         addModalEventListeners();
     }
+    function updatePage(){
+        updateScreen();
+        addMyEventListeners();
+    }
     populateDummyValues();
-    updateScreen();
-    addMyEventListeners();
+    updatePage();
     return { updateScreen, displayBase, displayProjects, displayTodos };
 })(stateManager);
